@@ -4,17 +4,18 @@ using System.Text.Json.Serialization;
 
 namespace BlogBoutique.Models
 {
-
     [Table("User")]
     public class UserModel
     {
 
         [Key]
         public Int64 UserId { get; set; }
-        public String? Username { get; set; }
-        public String? FirstName { get; set; }
-        public String? LastName { get; set; }
-        public String? EmailAddress { get; set; }
-        public String? Password { get; set; }
+        public String? Username { get; set; } = null;
+        public String? FirstName { get; set; } = null;
+        public String? LastName { get; set; } = null;
+        public String? EmailAddress { get; set; } = null;
+        public DateTime? DateCreated { get; set; } = null;
+        public DateTime? DateModified { get; set; } = null;
+        public String? Password { get; set; } = null;
     }
 }
