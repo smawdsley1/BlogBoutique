@@ -2,6 +2,7 @@
   "dependencies": {
     "@angular/cli": "^15.2.5",
     "@tinymce/tinymce-angular": "^7.0.0",
+    "bootstrap": "^4.6.2",
     "tinymce": "^6.4.1"
   }
 }

@@ -8,10 +8,21 @@ public class Startup
     }
 
     public IConfiguration Configuration { get; }
+    public String MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-    // This method gets called by the runtime. Use this method to add services to the container
+    // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddCors(options =>
+        {
+            options.AddPolicy(name: MyAllowSpecificOrigins,
+                policy =>
+                {
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowAnyOrigin();
+                });
+        });
         services.AddControllers();
     }
 
@@ -26,6 +37,8 @@ public class Startup
         app.UseHttpsRedirection();
 
         app.UseRouting();
+
+        app.UseCors(MyAllowSpecificOrigins);
 
         app.UseAuthorization();
 
