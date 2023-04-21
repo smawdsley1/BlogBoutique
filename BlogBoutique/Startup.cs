@@ -47,6 +47,12 @@ public class Startup
             endpoints.MapControllers();
             endpoints.MapGet("/", async context =>
             {
+                String filepath = Path.Combine(env.ContentRootPath, "home.html");
+
+                StreamReader sr = new StreamReader(filepath);   
+
+
+
                 await context.Response.WriteAsync("Welcome to running ASP.NET Core on AWS Lambda");
             });
         });

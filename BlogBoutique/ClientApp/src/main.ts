@@ -7,7 +7,7 @@ export function getBaseUrl() {
 }
 
 export function getApiUrl() {
-  return "https://localhost:56253/";
+  return "https://81in27jci3.execute-api.us-east-1.amazonaws.com/Prod/";
 }
 
 const providers = [
