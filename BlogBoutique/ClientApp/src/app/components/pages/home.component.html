@@ -1,6 +1,6 @@
 <h1>Blog Boutique</h1>
 
-<div *ngIf="!users">
+<div *ngIf="!blogs">
   <p>loading ;)</p>
 </div>
 
@@ -8,18 +8,14 @@
    <thead>
      <tr>
        <th></th>
-       <th>First Name</th>
-       <th>Last Name</th>
-       <th>Email</th>
+       <th>Title</th>
      </tr>
    </thead>
 
   <tbody>
-    <tr *ngFor="let user of users">
+    <tr *ngFor="let blog of blogs">
       <td></td>
-      <td>{{user.firstName}}</td>
-      <td>{{user.lastName}}</td>
-      <td>{{user.emailAddress}}</td>
+      <td>{{blog.title}}</td>
     </tr>
   </tbody>
 

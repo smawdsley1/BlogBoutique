@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/controls/navbar/navbar.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { SigninComponent } from './components/pages/signin/signin.component';
 import { AccountComponent } from './components/pages/account/account.component';
+import { PostComponent } from './components/pages/post/post.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AccountComponent } from './components/pages/account/account.component';
     NavbarComponent,
     SignupComponent,
     SigninComponent,
-    AccountComponent
+    AccountComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,6 +34,8 @@ import { AccountComponent } from './components/pages/account/account.component';
       { path: 'signup', component: SignupComponent },
       { path: 'signin', component: SigninComponent },
       { path: 'account', component: AccountComponent },
+      { path: 'post', component: PostComponent },
+
 
 
     ])

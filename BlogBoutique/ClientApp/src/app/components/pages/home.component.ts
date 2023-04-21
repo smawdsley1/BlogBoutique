@@ -1,20 +1,22 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router"
+import { BlogModel } from "../../models/blog-model";
 import { UserModel } from "../../models/user-model";
+import { BlogService } from "../../services/blog-service";
 import { SessionService } from "../../services/session-service";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  providers: [SessionService],
+  providers: [BlogService],
 })
 
 export class HomeComponent implements OnInit {
-  public users: UserModel[] = [];
+  public blogs: BlogModel[] = [];
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private sessionService: SessionService,
+    private blogService: BlogService,
   ) { }
 
 
@@ -25,10 +27,10 @@ export class HomeComponent implements OnInit {
   public reload() {
     console.log("reload");
 
-    this.sessionService.getUsers().subscribe(
+    this.blogService.getBlogs().subscribe(
       result => {
-        this.users = result.map(x => new UserModel(x));
-        console.log('got users; ' + this.users);
+        this.blogs = result.map(x => new BlogModel(x));
+        console.log('got blogs; ' + this.blogs);
       },
       error => {
         console.log(error);
@@ -36,6 +38,10 @@ export class HomeComponent implements OnInit {
     );
 
     console.log('reload done')
+  }
+
+  public goToBlog(BlogId: number | undefined) {
+    this._router.navigate(['/blog', BlogId]);
   }
 
 }
