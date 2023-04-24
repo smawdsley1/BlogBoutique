@@ -7,17 +7,20 @@ import { BlogModel } from '../models/blog-model';
 @Injectable()
 export class BlogService {
   public posts: BlogModel[] = [];
-  private APIUrl: string;
 
-  constructor(private http: HttpClient, @Inject('API_URL') apiUrl: string) {
-    this.APIUrl = `${apiUrl}api/blog`;
+  constructor(private http: HttpClient,
+    @Inject('API_URL') private apiUrl: string) {
   }
 
   public getBlogs(): Observable<BlogModel[]> {
-    return this.http.get<BlogModel[]>(this.APIUrl + '/GetBlogs/');
+    return this.http.get<BlogModel[]>(this.apiUrl + 'api/blog/GetBlogs/');
   }
 
   public getItemById(id: number): Observable<BlogModel> {
-    return this.http.get<BlogModel>(this.APIUrl + 'api/home/GetItemById/' + id);
+    return this.http.get<BlogModel>(this.apiUrl + 'api/blog/GetItemById/' + id);
+  }
+
+  public getBlogsByUserId(id: number): Observable<BlogModel[]> {
+    return this.http.get<BlogModel[]>(this.apiUrl + 'api/blog/GetItemsByUserId/' + id);
   }
 }

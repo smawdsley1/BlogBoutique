@@ -1,0 +1,24 @@
+<div class="form-group" *ngIf="user">
+  <label for="Username">Username</label>
+  <input type="text" id="username" name="username" class="form-control"
+         required [(ngModel)]="user.username" #username="ngModel">
+  <div *ngIf="username.invalid && (username.dirty || username.touched)"
+       class="alert">
+    <div *ngIf="username.errors?.['required']">
+      Username is required.
+    </div>
+  </div>
+  <label for="Password">Password</label>
+  <input type="password" id="password" name="password" class="form-control"
+         required [(ngModel)]="user.password" #password="ngModel">
+  <div *ngIf="password.invalid && (password.dirty || password.touched)"
+       class="alert">
+    <div *ngIf="password.errors?.['required']">
+      Password is required.
+    </div>
+  </div>
+</div>
+<div>
+  <p *ngIf="errorMessage">{{errorMessage}}</p>
+  <button class="btn btn-primary me-2" (click)="login()">Sign-Up</button>
+</div>

@@ -1,23 +1,22 @@
-<h1>Blog Boutique</h1>
+<h1>Blogline</h1>
 
 <div *ngIf="!blogs">
   <p>loading ;)</p>
 </div>
 
 <table class="table">
-   <thead>
-     <tr>
-       <th></th>
-       <th>Title</th>
-     </tr>
-   </thead>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+    </tr>
+  </thead>
 
   <tbody>
     <tr *ngFor="let blog of blogs">
       <td></td>
-      <td>{{blog.title}}</td>
+      <td><a href="javascript:void(0)" (click)="goToBlog(blog.blogId)">{{blog.title}}</a></td>
     </tr>
   </tbody>
 
 </table>
-

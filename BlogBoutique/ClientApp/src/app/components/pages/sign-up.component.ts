@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserModel } from '../../../models/user-model';
-import { SessionService } from '../../../services/session-service';
+import { UserModel } from '../../models/user-model';
+import { SessionService } from '../../services/session-service';
+import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'sign-up',
-  templateUrl: './signup.component.html',
+  templateUrl: './sign-up.component.html',
   providers: [SessionService],
 })
 export class SignupComponent implements OnInit {
@@ -22,7 +23,7 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
     let id = this._route.snapshot.paramMap.get('id');
     this.userId = parseInt(<string>id);
-    console.log('got customer id: ', this.userId);
+    console.log('got user id: ', this.userId);
 
     this.reload();
   }
@@ -30,21 +31,8 @@ export class SignupComponent implements OnInit {
   public reload() {
     console.log('reload');
 
-    if (this.userId == 0) {
-      // this is an ADD
-      this.user = new UserModel();
-    } else {
-      // invoke the C# API UsersController.GetItems()
-      this.sessionService.getItemById(this.userId).subscribe(
-        (result) => {
-          this.user = new UserModel(result);
-          console.log('got customer: ' + this.user);
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-    }
+    this.user = new UserModel();
+    
     console.log('reload done');
   }
 
@@ -76,6 +64,7 @@ export class SignupComponent implements OnInit {
     }
     this.sessionService.post(<UserModel>this.user).subscribe(
       (result) => {
+        this.sessionService.toggleLogin();
         this._router.navigate(['/home']);
       },
       (error) => {

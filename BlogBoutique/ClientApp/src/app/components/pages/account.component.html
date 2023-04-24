@@ -1,0 +1,30 @@
+<h1>Account Page</h1>
+
+<button class="btn btn-primary me-2" (click)="goToPost()">Make a new Blog</button>
+<button class="btn btn-primary me-2" (click)="editAccount()">Edit Account</button>
+
+<div *ngIf="user">
+  <p>loading ;)</p>
+</div>
+
+<div *ngIf="user">
+  <h3>{{user.username}}'s Posts</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let blog of blogs">
+        <td></td>
+        <td><a href="javascript:void(0)" (click)="goToBlog(blog.blogId)">{{blog.title}}</a></td>
+        <td><a href="javascript:void(0)" (click)="edit(blog.blogId)">Edit Blog</a></td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+

@@ -1,16 +1,18 @@
-﻿using BlogBoutique.Helpers;
+﻿using BlogBoutique.Controllers;
+using BlogBoutique.Helpers;
+using BlogBoutique.Models;
+using BlogBoutique.Helpers;
 using BlogBoutique.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-//using NuGet.Protocol.Plugins;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Text;
 
-namespace BlogBoutique.Controllers
+namespace Blogline.Controllers
 {
     [ApiController]
     [Route("api/auth")]
@@ -114,30 +116,29 @@ namespace BlogBoutique.Controllers
                         return NotFound("Invalid Username or password.");
                     }
 
-                    if (user.Password != value.Password)
+                    if (user.Password != PasswordHash)
                     {
                         await Task.Delay(2000);
-                        return NotFound("Invalid Username or password.");
+                        return NotFound("Invalid Username or ");
                     }
 
+                    // Create JWT token
                     var claims = new[]
                     {
-                        new Claim(JwtRegisteredClaimNames.Sub, value.Username),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                        new Claim("userId", user.UserId.ToString())
                     };
 
-                    // Create JWT token
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-secret-key"));
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Secrets.JsonSecret));
+                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
                     var token = new JwtSecurityToken(
-                        issuer: "your-issuer",
-                        audience: "your-audience",
+                        issuer: "https://81in27jci3.execute-api.us-east-1.amazonaws.com/Prod/",
+                        audience: "http://localhost:4200/",
                         claims: claims,
                         expires: DateTime.UtcNow.AddMinutes(60),
                         signingCredentials: creds);
 
                     // Return JWT token
-                    return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                    return Ok(new AuthenticatedResponse { Token = new JwtSecurityTokenHandler().WriteToken(token) });
                 }
 
             }
@@ -163,7 +164,7 @@ namespace BlogBoutique.Controllers
                          || String.IsNullOrWhiteSpace(value.Username)
                          || String.IsNullOrWhiteSpace(value.Password))
                     {
-                        return new StatusCodeResult(400);
+                        return NotFound();
                     }
 
                     // if you need to validate email address,
@@ -180,7 +181,17 @@ namespace BlogBoutique.Controllers
                     db.User.Add(user);
                     db.SaveChanges();
 
-                    return new OkResult();
+                    // Create JWT token
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Secrets.JsonSecret));
+                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
+                    var token = new JwtSecurityToken(
+                        issuer: "https://81in27jci3.execute-api.us-east-1.amazonaws.com/Prod/",
+                        audience: "http://localhost:4200/",
+                        expires: DateTime.UtcNow.AddMinutes(60),
+                        signingCredentials: creds);
+
+                    // Return JWT token
+                    return Ok(new AuthenticatedResponse { Token = new JwtSecurityTokenHandler().WriteToken(token) });
                 }
 
             }

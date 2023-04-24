@@ -1,23 +1,26 @@
 import { HttpClient, HttpStatusCode } from "@angular/common/http";
-import { Injectable, Inject } from '@angular/core';
+import { Inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { UserModel } from "../models/user-model";
+import { catchError, map } from 'rxjs/operators';
+
+
 
 
 @Injectable()
 export class SessionService {
   public user: UserModel | undefined;
+  public loggedIn = false;
 
   constructor(
-  private http: HttpClient,
+    private http: HttpClient,
     @Inject('API_URL') private apiUrl: string) {
-
   }
 
   public getUsers(): Observable<UserModel[]> {
+    //https://localhost:20881/api/home/GetUsers
     return this.http.get<UserModel[]>(this.apiUrl + 'api/auth/GetUsers');
   }
-
   public getItemById(id: number): Observable<UserModel> {
     return this.http.get<UserModel>(this.apiUrl + 'api/auth/GetItemById/' + id);
   }
@@ -30,17 +33,28 @@ export class SessionService {
     return this.http.put<any>(this.apiUrl + 'api/auth/Put/' + id, user);
   }
 
- /* public isLoggedIn() {
-    return this.customerId > 0;
+  public login(user: UserModel): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'api/auth/Login', user);
+  }
+
+  public toggleLogin() {
+    if (this.loggedIn == false) {
+      this.loggedIn = true;
+    }
+    else {
+      this.loggedIn = false;
+    }
+  }
+
+  public isLoggedIn() {
+    return this.loggedIn;
   }
 
   public logout() {
-    return this.customerId = 0;
-  }*/
+    return this.loggedIn = false;
+  }
 
-  /*public login(user: CustomerModel): Observable<any> {
-    return this.http.post<any>(this.baseUrl + 'api/auth/Login', user);
-  }*/
+
+
+
 }
-
-

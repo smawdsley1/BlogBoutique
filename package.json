@@ -1,8 +1,10 @@
 {
   "dependencies": {
     "@angular/cli": "^15.2.5",
+    "@ng-bootstrap/ng-bootstrap": "^14.1.0",
     "@tinymce/tinymce-angular": "^7.0.0",
     "bootstrap": "^4.6.2",
+    "jwt-decode": "^3.1.2",
     "tinymce": "^6.4.1"
   }
 }

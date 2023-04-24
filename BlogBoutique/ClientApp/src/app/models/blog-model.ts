@@ -1,7 +1,7 @@
 export class BlogModel {
   public selected?= false;
 
-  public userId: number = 0;
+  public blogId: number = 0;
   public title?: string = '';
   public text?: string = '';
   public image?: string = '';
