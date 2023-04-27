@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/pages/home.component';
@@ -17,6 +18,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SessionService } from './services/session-service';
 import { EditBlogComponent } from './components/pages/edit-blog.component';
 import { EditAccountComponent } from './components/pages/edit-account.component';
+import { UploadImageComponent } from './components/pages/upload-image.component';
+import { BlogService } from './services/blog-service'
 
 @NgModule({
   declarations: [
@@ -25,17 +28,20 @@ import { EditAccountComponent } from './components/pages/edit-account.component'
     SignupComponent,
     SigninComponent,
     AccountComponent,
-    PostComponent,
+   PostComponent,
     BlogComponent,
     NavbarComponent,
     EditBlogComponent,
-    EditAccountComponent
+    EditAccountComponent,
+    UploadImageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     EditorModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    NgMultiSelectDropDownModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
@@ -46,12 +52,14 @@ import { EditAccountComponent } from './components/pages/edit-account.component'
       { path: 'blog/:id', component: BlogComponent },
       { path: 'edit-blog/:id', component: EditBlogComponent },
       { path: 'edit-account/:id', component: EditAccountComponent },
+      { path: 'upload-image/:id', component: UploadImageComponent },
     ]),
     NgbModule
   ],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
     SessionService,
+    BlogService
   ],
   bootstrap: [AppComponent]
 })

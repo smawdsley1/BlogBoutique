@@ -13,7 +13,7 @@ import { SessionService } from '../../services/session-service';
 export class AccountComponent {
   public user?: UserModel;
   public blogs: BlogModel[] = [];
-  private userId = 0;
+  public userId = 0;
 
   public constructor(private _router: Router,
     private _route: ActivatedRoute,

@@ -3,8 +3,8 @@
 <button class="btn btn-primary me-2" (click)="goToPost()">Make a new Blog</button>
 <button class="btn btn-primary me-2" (click)="editAccount()">Edit Account</button>
 
-<div *ngIf="user">
-  <p>loading ;)</p>
+<div *ngIf="!user">
+  <p>loading...</p>
 </div>
 
 <div *ngIf="user">

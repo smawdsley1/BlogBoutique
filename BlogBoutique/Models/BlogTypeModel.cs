@@ -8,7 +8,7 @@ namespace BlogBoutique.Models
     public class BlogTypeModel
     {
         [Key]
-        public Int64 BlogId { get; set; }
+        public Int64 BlogTypeId { get; set; }
         public String? Name { get; set; } = null;
     }
 }

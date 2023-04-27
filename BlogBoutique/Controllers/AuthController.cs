@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+//using NuGet.Protocol.Plugins;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Text;
 
-namespace Blogline.Controllers
+namespace BlogBoutique.Controllers
 {
     [ApiController]
     [Route("api/auth")]
@@ -62,6 +63,32 @@ namespace Blogline.Controllers
             {
                 Console.WriteLine("AuthController.GetUsers() got error: " + ex.Message + ", Stack = " + ex.StackTrace);
                 return new ObjectResult(ex.Message);
+            }
+        }
+
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetItemById(Int64 id)
+        {
+            try
+            {
+                Console.WriteLine("AuthController.GetItemById() fetching user by id " + id);
+
+                using (MyContext db = new MyContext())
+                {
+                    UserModel? user = db.User.FirstOrDefault(x => x.UserId == id);
+                    if (user == null)
+                    {
+                        return new NotFoundResult();
+                    }
+                    return new ObjectResult(user);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("AuthController.GetItemById() got error: " + ex.Message + ", Stack = " + ex.StackTrace);
+                return StatusCode(500);
             }
         }
 
@@ -232,7 +259,7 @@ namespace Blogline.Controllers
                     existingUser.LastName = value.LastName;
                     existingUser.Username = value.Username;
                     existingUser.Password = StringHelper.CreateSha512Hash(value.Password);
-                    existingUser.DateCreated = DateTime.UtcNow;
+                    existingUser.DateModified = DateTime.UtcNow;
 
                     db.User.Add(existingUser);
                     db.SaveChanges();

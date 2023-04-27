@@ -1,2 +1,51 @@
-<h1>Edit Account Page</h1>
-
+<div class="form-group" *ngIf="currentUser">
+  <label for="First Name">First Name</label>
+  <input type="text" id="fName" name={{currentUser.firstName}} class="form-control"
+         required [(ngModel)]="currentUser.firstName" #fName="ngModel">
+  <div *ngIf="fName.invalid && (fName.dirty || fName.touched)"
+       class="alert">
+    <div *ngIf="fName.errors?.['required']">
+      First Name is required.
+    </div>
+  </div>
+  <label for="Last Name">Last Name</label>
+  <input type="text" id="lName" name="{{currentUser.lastName}}" class="form-control"
+         required [(ngModel)]="currentUser.lastName" #lName="ngModel">
+  <div *ngIf="lName.invalid && (lName.dirty || lName.touched)"
+       class="alert">
+    <div *ngIf="lName.errors?.['required']">
+      Last Name is required.
+    </div>
+  </div>
+  <label for="Email Address">Email Address</label>
+  <input type="text" id="email" name="{{currentUser.emailAddress}}" class="form-control"
+         required [(ngModel)]="currentUser.emailAddress" #email="ngModel">
+  <div *ngIf="email.invalid && (email.dirty || email.touched)"
+       class="alert">
+    <div *ngIf="email.errors?.['required']">
+      Email Address is required.
+    </div>
+  </div>
+  <label for="Username">Username</label>
+  <input type="text" id="username" name="{{currentUser.username}}" class="form-control"
+         required [(ngModel)]="currentUser.username" #username="ngModel">
+  <div *ngIf="username.invalid && (username.dirty || username.touched)"
+       class="alert">
+    <div *ngIf="username.errors?.['required']">
+      Username is required.
+    </div>
+  </div>
+  <label for="Password">Password</label>
+  <input type="password" id="password" name="password" class="form-control"
+         required [(ngModel)]="currentUser.password" #password="ngModel">
+  <div *ngIf="password.invalid && (password.dirty || password.touched)"
+       class="alert">
+    <div *ngIf="password.errors?.['required']">
+      Password is required.
+    </div>
+  </div>
+</div>
+<div>
+  <p *ngIf="errorMessage">{{errorMessage}}</p>
+  <button class="btn btn-primary me-2" (click)="update()">Sign-Up</button>
+</div>

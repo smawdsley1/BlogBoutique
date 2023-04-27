@@ -29,8 +29,8 @@ export class SessionService {
     return this.http.post<any>(this.apiUrl + 'api/auth/Post', user);
   }
 
-  public put(id: number, user: UserModel): Observable<any> {
-    return this.http.put<any>(this.apiUrl + 'api/auth/Put/' + id, user);
+  public updateUser(id: number, user: UserModel): Observable<any> {
+    return this.http.put<any>(this.apiUrl + 'api/auth/UpdateUser/' + id, user);
   }
 
   public login(user: UserModel): Observable<any> {
@@ -53,8 +53,4 @@ export class SessionService {
   public logout() {
     return this.loggedIn = false;
   }
-
-
-
-
 }
