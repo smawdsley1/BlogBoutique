@@ -38,5 +38,8 @@ export class BlogService {
     return this.http.get<UserModel>(this.apiUrl + 'api/auth/GetItemById/' + id);
   }
 
+  public updateBlog(id: number, blog: BlogModel): Observable<any> {
+    return this.http.put<any>(this.apiUrl + 'api/blog/UpdateBlog/' + id, blog);
+  }
 
 }

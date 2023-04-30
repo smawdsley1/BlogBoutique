@@ -165,7 +165,7 @@ namespace BlogBoutique.Controllers
             }
         }
 
-        [HttpPut("[action]")]
+        [HttpPut("[action]/{id}")]
         public IActionResult UpdateBlog(int id, [FromBody] BlogModel blog)
         {
             try
@@ -179,11 +179,13 @@ namespace BlogBoutique.Controllers
 
                     if (existingBlog == null)
                     {
+                        Console.WriteLine("BlogController.UpdateBlog() existingBlog is null.");
                         return new NotFoundResult();
                     }
 
-                    if (existingBlog.UserId == blog.UserId)
+                    if (existingBlog.UserId != blog.UserId)
                     {
+                        Console.WriteLine("BlogController.UpdateBlog() userId is not correct.");
                         return new StatusCodeResult(403);
                     }
 
@@ -212,6 +214,7 @@ namespace BlogBoutique.Controllers
                 return StatusCode(500);
             }
         }
+
 
         [HttpPost("[action]")]
         public async Task<IActionResult> UploadFile(Int64 BlogId, IFormFile file)

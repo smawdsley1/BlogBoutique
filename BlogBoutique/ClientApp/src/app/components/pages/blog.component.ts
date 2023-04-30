@@ -49,4 +49,8 @@ export class BlogComponent implements OnInit {
   public goBack() {
     this._router.navigate(['/home']);
   }
+
+  public toEdit() {
+    this._router.navigate(['/edit-blog', this.blogId]);
+  }
 }

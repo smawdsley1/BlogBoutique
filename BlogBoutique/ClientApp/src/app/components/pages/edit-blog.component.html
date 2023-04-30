@@ -1,3 +1,22 @@
-<h1>Edit Blog Page</h1>
+<div class="form-group" *ngIf="currentBlog">
+  <label for="Title">Title</label>
+  <input type="text" id="title" name="{{currentBlog.title}}" class="form-control" required [(ngModel)]="currentBlog.title" #title="ngModel">
+  <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">
+    <div *ngIf="title.errors?.['required']">
+      Title is required.
+    </div>
+  </div>
+  <label for="Text">Text</label>
+  <textarea id="text" name="{{currentBlog.text}}" class="form-control" rows="5" required [(ngModel)]="currentBlog.text" #text="ngModel"></textarea>
+  <div *ngIf="text.invalid && (text.dirty || text.touched)" class="alert">
+    <div *ngIf="text.errors?.['required']">
+      Text is required.
+    </div>
+  </div>
+</div>
+<div>
+  <p *ngIf="errorMessage">{{errorMessage}}</p>
+  <button class="btn btn-primary me-2" (click)="update()">Update</button>
 
-
+</div>
+<button class="btn btn-primary" (click)="goBack()">Go Back</button>
