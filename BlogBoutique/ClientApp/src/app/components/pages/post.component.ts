@@ -118,7 +118,7 @@ export class PostComponent {
     this.blogService.post(< BlogModel > postBlog).subscribe(
       (result) => {
         this.blogId = result.blogId;
-        this._router.navigate(['/upload-image', this.blogId]);
+        this._router.navigate(['/upload-image', this.blogId, this.userId]);
       },
       (error) => {
         this.errorMessage = 'Missing Required Information.';

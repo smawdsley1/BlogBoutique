@@ -1,23 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { BlogModel } from '../../models/blog-model';
+import { CommentModel } from '../../models/comment-model';
+import { PhotoModel } from '../../models/photo-model';
 import { BlogService } from '../../services/blog-service';
+import { CommentService } from '../../services/comment-service';
+import { SessionService } from '../../services/session-service';
 
 @Component({
   selector: 'app-post',
   templateUrl: './blog.component.html',
-  providers: [BlogService],
+  styleUrls: ['./blog.component.css'],
+  providers: [BlogService, CommentService, SessionService],
 
 })
 export class BlogComponent implements OnInit {
-
+  isExpanded = false;
+  private dialog: NgbModalRef | undefined = undefined;
   public item: BlogModel | undefined;
+  public image: PhotoModel | undefined;
   private blogId = 0;
+  public comments: CommentModel[] = [];
+  public errorMessage = '';
+  public comment = new CommentModel;
+  public isLoggedIn = false;
 
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
     private blogService: BlogService,
+    private commentService: CommentService,
+    private modalService: NgbModal,
+    private sessionService: SessionService,
   ) {
   }
 
@@ -33,7 +48,7 @@ export class BlogComponent implements OnInit {
 
     console.log('reload');
 
-    // invoke the C# API UsersController.GetItems()
+    
     this.blogService.getItemById(this.blogId).subscribe(
       result => {
         this.item = new BlogModel(result);
@@ -43,6 +58,27 @@ export class BlogComponent implements OnInit {
         console.error(error);
       }
     );
+
+    this.blogService.getImageById(this.blogId).subscribe(
+      result => {
+        this.image = new PhotoModel(result);
+        console.log('got image: ' + this.item);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+
+    this.commentService.getCommentsById(this.blogId).subscribe(
+      result => {
+        this.comments = result.map(x => new CommentModel(x));
+        console.log('got comments; ' + this.comments);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
     console.log('reload done');
   }
 
@@ -50,7 +86,46 @@ export class BlogComponent implements OnInit {
     this._router.navigate(['/home']);
   }
 
-  public toEdit() {
-    this._router.navigate(['/edit-blog', this.blogId]);
+  collapse() {
+    this.isExpanded = false;
+  }
+
+  toggle() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  open(content: any) {
+    this.dialog = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  cancel() {
+    this.dialog?.close();
+  }
+
+  save() {
+    this.errorMessage = '';
+    if (this.isLoggedIn) {
+      this.errorMessage = "You must be logged in to Comment";
+      return;
+    }
+
+    this.errorMessage = '';
+    if (this.comment?.text?.trim() == '') {
+      this.errorMessage = "Text is Required";
+      return;
+    }
+
+    this.comment.blogId = this.blogId;
+    this.comment.userId = this.sessionService.userId;
+
+    this.commentService.post(<CommentModel>this.comment).subscribe(
+      result => {
+        this.dialog?.close();
+        this._router.navigate(['/blog', this.blogId]);
+      },
+      error => {
+      console.log(error);
+      }
+    );
   }
 }

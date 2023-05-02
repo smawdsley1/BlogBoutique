@@ -1,3 +1,5 @@
+<h1>Edit Account Page</h1>
+
 <div class="form-group" *ngIf="currentUser">
   <label for="First Name">First Name</label>
   <input type="text" id="fName" name={{currentUser.firstName}} class="form-control"
@@ -35,17 +37,14 @@
       Username is required.
     </div>
   </div>
-  <label for="Password">Password</label>
-  <input type="password" id="password" name="password" class="form-control"
-         required [(ngModel)]="currentUser.password" #password="ngModel">
-  <div *ngIf="password.invalid && (password.dirty || password.touched)"
-       class="alert">
-    <div *ngIf="password.errors?.['required']">
-      Password is required.
-    </div>
-  </div>
+  <label for="oldPassword">Old Password</label>
+  <input type="password" id="oldPassword" name="oldPassword" class="form-control"
+         required [(ngModel)]="oldPassword">
+  <label for="newPassword">Password</label>
+  <input type="password" id="newPassword" name="newPassword" class="form-control"
+         required [(ngModel)]="newPassword">
 </div>
 <div>
   <p *ngIf="errorMessage">{{errorMessage}}</p>
-  <button class="btn btn-primary me-2" (click)="update()">Sign-Up</button>
+  <button class="btn btn-primary me-2" (click)="update()">Update Account</button>
 </div>

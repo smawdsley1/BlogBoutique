@@ -19,7 +19,6 @@ import { SessionService } from './services/session-service';
 import { EditBlogComponent } from './components/pages/edit-blog.component';
 import { EditAccountComponent } from './components/pages/edit-account.component';
 import { UploadImageComponent } from './components/pages/upload-image.component';
-import { BlogService } from './services/blog-service'
 
 @NgModule({
   declarations: [
@@ -50,16 +49,15 @@ import { BlogService } from './services/blog-service'
       { path: 'account/:id', component: AccountComponent },
       { path: 'post/:id', component: PostComponent },
       { path: 'blog/:id', component: BlogComponent },
-      { path: 'edit-blog/:id', component: EditBlogComponent },
+      { path: 'edit-blog/:id/:uid', component: EditBlogComponent },
       { path: 'edit-account/:id', component: EditAccountComponent },
-      { path: 'upload-image/:id', component: UploadImageComponent },
+      { path: 'upload-image/:id/:uid', component: UploadImageComponent },
     ]),
     NgbModule
   ],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
     SessionService,
-    BlogService
   ],
   bootstrap: [AppComponent]
 })

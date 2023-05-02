@@ -11,6 +11,7 @@ import { catchError, map } from 'rxjs/operators';
 export class SessionService {
   public user: UserModel | undefined;
   public loggedIn = false;
+  public userId = 0;
 
   constructor(
     private http: HttpClient,
@@ -29,28 +30,31 @@ export class SessionService {
     return this.http.post<any>(this.apiUrl + 'api/auth/Post', user);
   }
 
+  public put(id: number, user: UserModel): Observable<any> {
+    return this.http.put<any>(this.apiUrl + 'api/auth/Put/' + id, user);
+  }
+
   public updateUser(id: number, user: UserModel): Observable<any> {
     return this.http.put<any>(this.apiUrl + 'api/auth/UpdateUser/' + id, user);
   }
+
 
   public login(user: UserModel): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'api/auth/Login', user);
   }
 
-  public toggleLogin() {
-    if (this.loggedIn == false) {
+  public isLoggedIn() {
+    if (this.userId > 0) {
       this.loggedIn = true;
+      return this.loggedIn;
     }
     else {
-      this.loggedIn = false;
+      return false;
     }
-  }
-
-  public isLoggedIn() {
-    return this.loggedIn;
   }
 
   public logout() {
+    this.userId = 0;
     return this.loggedIn = false;
   }
 }

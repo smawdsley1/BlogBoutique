@@ -4,11 +4,10 @@ using Amazon.Runtime.CredentialManagement;
 using Amazon.S3;
 using Amazon.S3.Model;
 using BlogBoutique.Controllers;
-using BlogBoutique.Models;
 using BlogBoutique.Helpers;
 using BlogBoutique.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 using System.Globalization;
@@ -117,7 +116,34 @@ namespace BlogBoutique.Controllers
             }
         }
 
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetBlogImageById(Int64 id)
+        {
+            try
+            {
+                Console.WriteLine("BlogController.GetBlogImageById() fetching image by id " + id);
+
+                using (MyContext db = new MyContext())
+                {
+                    PhotoModel? image = db.Photo.FirstOrDefault(x => x.BlogId == id);
+                    if (image == null)
+                    {
+                        return new NotFoundResult();
+                    }
+                    return new ObjectResult(image);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("BlogController.GetBlogImageById() got error: " + ex.Message + ", Stack = " + ex.StackTrace);
+                return StatusCode(500);
+            }
+        }
+
         [HttpPost("[action]")]
+        //[Authorize]
         public IActionResult Post([FromBody] BlogModel blog)
         {
             try
@@ -151,8 +177,9 @@ namespace BlogBoutique.Controllers
                         BlogBlogTypeModel type = new BlogBlogTypeModel();
                         type.BlogId = newBlog.BlogId;
                         type.BlogTypeId = bbt.BlogTypeId;
+                        // db.BlogBlogType.Add(type);
                     }
-                    db.SaveChanges();
+                    //db.SaveChanges();
 
                     return new ObjectResult(newBlog);
                 }
@@ -166,6 +193,7 @@ namespace BlogBoutique.Controllers
         }
 
         [HttpPut("[action]/{id}")]
+        //[Authorize]
         public IActionResult UpdateBlog(int id, [FromBody] BlogModel blog)
         {
             try
@@ -179,13 +207,11 @@ namespace BlogBoutique.Controllers
 
                     if (existingBlog == null)
                     {
-                        Console.WriteLine("BlogController.UpdateBlog() existingBlog is null.");
                         return new NotFoundResult();
                     }
 
                     if (existingBlog.UserId != blog.UserId)
                     {
-                        Console.WriteLine("BlogController.UpdateBlog() userId is not correct.");
                         return new StatusCodeResult(403);
                     }
 
@@ -203,7 +229,9 @@ namespace BlogBoutique.Controllers
                         BlogBlogTypeModel type = new BlogBlogTypeModel();
                         type.BlogId = blog.BlogId;
                         type.BlogTypeId = bbt.BlogTypeId;
+                        //db.BlogBlogType.Add(type);
                     }
+                    //db.SaveChanges();
 
                     return new ObjectResult(existingBlog);
                 }
@@ -215,11 +243,11 @@ namespace BlogBoutique.Controllers
             }
         }
 
-
         [HttpPost("[action]")]
-        public async Task<IActionResult> UploadFile(Int64 BlogId, IFormFile file)
+        //[Authorize]
+        public async Task<IActionResult> UploadFile(IFormFile file)
         {
-            string tempFilePath = null;
+            String tempFilePath = null;
             try
             {
                 Console.WriteLine("BlogController.UploadFile() updating a file " + file.FileName + DateTime.UtcNow.ToString());
@@ -261,16 +289,18 @@ namespace BlogBoutique.Controllers
 
                 Console.WriteLine("upload to s3... OK");
 
-                var imageUrl = $"{s3Client.Config.ServiceURL}/{tempFilePath}";
+                var imageUrl = $"https://s3.amazonaws.com/linfield.casey.2023/{hashName}";
 
                 using (MyContext db = new MyContext())
                 {
+                    string blogId = Request.Form["blogId"];
 
                     PhotoModel image = new PhotoModel();
-                    image.BlogId = BlogId;
+                    image.BlogId = int.Parse(blogId);
                     image.Url = imageUrl;
                     image.DateCreated = DateTime.UtcNow;
                     db.Photo.Add(image);
+                    db.SaveChanges();
                 }
 
                 return Ok(new { imageUrl });
@@ -289,6 +319,5 @@ namespace BlogBoutique.Controllers
                 }
             }
         }
-
     }
 }

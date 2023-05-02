@@ -3,20 +3,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserModel } from '../../models/user-model';
 import { SessionService } from '../../services/session-service';
 
-
 @Component({
-  selector: 'app-edit-account',
+  selector: 'app-post',
   templateUrl: './edit-account.component.html',
   providers: [SessionService],
-
 })
 export class EditAccountComponent implements OnInit {
   currentUser: UserModel = new UserModel();
   userId: number = 0;
   errorMessage: string = '';
+  oldPassword: string = '';
+  newPassword: string = '';
 
-  constructor(private sessionService: SessionService, private _route: ActivatedRoute, private _router: Router)
-  {
+  constructor(private sessionService: SessionService,
+    private _route: ActivatedRoute,
+    private _router: Router) {
   }
 
   ngOnInit() {
@@ -30,10 +31,6 @@ export class EditAccountComponent implements OnInit {
   public reload() {
     console.log('reload');
 
-
-
-
-    // invoke the C# API UsersController.GetItems()
     this.sessionService.getItemById(this.userId).subscribe(
       (result) => {
         this.currentUser = new UserModel(result);
@@ -43,7 +40,7 @@ export class EditAccountComponent implements OnInit {
         console.error(error);
       }
     );
-    
+
     console.log('reload done');
   }
 
@@ -70,13 +67,24 @@ export class EditAccountComponent implements OnInit {
       return;
     }
     this.errorMessage = '';
-    if (this.currentUser?.password?.trim() == '') {
-      this.errorMessage = 'Password is Required';
+    if (this.oldPassword?.trim() == '') {
+      this.errorMessage = 'Previous Password is Required';
       return;
     }
+    this.errorMessage = '';
+    if (this.newPassword?.trim() == '') {
+      this.errorMessage = 'New Password is Required';
+      return;
+    }
+    this.errorMessage = '';
+    if (this.currentUser?.password != this.oldPassword) {
+      this.errorMessage = 'Your Previous Password is Incorrect';
+      return;
+    }
+
     this.sessionService.updateUser(this.userId, <UserModel>this.currentUser).subscribe(
       (result) => {
-        this.sessionService.toggleLogin();
+        this.sessionService.userId = result.userId;
         this._router.navigate(['/home']);
       },
       (error) => {
@@ -85,6 +93,4 @@ export class EditAccountComponent implements OnInit {
       }
     );
   }
-  }
-
-
+}

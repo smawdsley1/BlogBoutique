@@ -1,3 +1,6 @@
+<h1>Edit Blog Page</h1>
+
+
 <div class="form-group" *ngIf="currentBlog">
   <label for="Title">Title</label>
   <input type="text" id="title" name="{{currentBlog.title}}" class="form-control" required [(ngModel)]="currentBlog.title" #title="ngModel">

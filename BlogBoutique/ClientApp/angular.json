@@ -36,6 +36,7 @@
             ],
             "styles": [
               "src/styles.sass"
+
             ],
             "scripts": []
           },
@@ -99,6 +100,7 @@
             ],
             "styles": [
               "src/styles.sass"
+
             ],
             "scripts": []
           }

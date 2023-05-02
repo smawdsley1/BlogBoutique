@@ -59,16 +59,16 @@ export class AccountComponent {
     this._router.navigate(['/post', this.userId]);
   }
 
-  public edit(BlogId: number | undefined) {
-    this._router.navigate(['/post', BlogId]);
+  public edit(blogId: number | undefined) {
+    this._router.navigate(['/edit-blog', blogId, this.userId]);
   }
 
   public editAccount() {
     this._router.navigate(['/edit-account', this.userId]);
   }
 
-  public goToBlog(BlogId: number | undefined) {
-    this._router.navigate(['/blog', BlogId]);
+  public goToBlog(blogId: number | undefined) {
+    this._router.navigate(['/blog', blogId]);
   }
 
 }

@@ -1,5 +1,46 @@
-<h1>{{item?.title}}</h1>
-<button class="btn btn-primary" (click)="goBack()">Go Back</button>
-<button class="btn btn-secondary" (click)="toEdit()">Edit Blog</button>
+<div class="blog-component">
 
-<p>{{item?.text}}</p>
+  <h1>{{item?.title}}</h1>
+  <button class="btn btn-primary" (click)="goBack()">Go Back</button>
+
+  <img src="{{image?.url}}" />
+
+  <p>{{item?.text}}</p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Comments</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let comment of comments">
+        <td></td>
+        <td>{{comment.text}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #myModal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Login</h4>
+      <button type="button" class="close" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <p *ngIf="errorMessage">{{errorMessage}}</p>
+
+      <p>Username:</p>
+      <p><input type="text" class="form-control" [(ngModel)]="comment.text" /></p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="save()">Sign-In</button>
+      <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+    </div>
+  </ng-template>
+</div>

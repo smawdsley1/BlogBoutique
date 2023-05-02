@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BlogModel } from '../models/blog-model';
 import { BlogTypeModel } from '../models/blog-type-model';
+import { PhotoModel } from '../models/photo-model';
 import { UserModel } from '../models/user-model';
 
 @Injectable()
@@ -30,16 +31,15 @@ export class BlogService {
     return this.http.get<BlogTypeModel[]>(this.apiUrl + 'api/blog/GetBlogTypes/');
   }
 
-  public post(blog: BlogModel): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/blog/Post', blog)
+  public getImageById(id: number): Observable<PhotoModel> {
+    return this.http.get<PhotoModel>(this.apiUrl + 'api/blog/GetBlogImageById/' + id);
   }
 
-  public getUserById(id: number): Observable<UserModel> {
-    return this.http.get<UserModel>(this.apiUrl + 'api/auth/GetItemById/' + id);
+  public post(blog: BlogModel): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'api/blog/Post', blog)
   }
 
   public updateBlog(id: number, blog: BlogModel): Observable<any> {
     return this.http.put<any>(this.apiUrl + 'api/blog/UpdateBlog/' + id, blog);
   }
-
 }

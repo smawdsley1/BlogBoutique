@@ -10,6 +10,8 @@ namespace BlogBoutique.Models
         public DbSet<BlogTypeModel> BlogType { get; set; }
         public DbSet<BlogBlogTypeModel> BlogBlogType { get; set; }
         public DbSet<PhotoModel> Photo { get; set; }
+        public DbSet<CommentModel> Comment { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString,

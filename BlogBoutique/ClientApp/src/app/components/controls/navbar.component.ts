@@ -83,7 +83,7 @@ export class NavbarComponent {
         let decodedJWT = JSON.parse(window.atob(token.split('.')[1]));
         this.userId = parseInt(decodedJWT.userId);
 
-        this.sessionService.toggleLogin();
+        this.sessionService.userId = parseInt(decodedJWT.userId);
 
         // navigate away
         this._router.navigate(['/home']);

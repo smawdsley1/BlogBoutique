@@ -64,7 +64,6 @@ export class SignupComponent implements OnInit {
     }
     this.sessionService.post(<UserModel>this.user).subscribe(
       (result) => {
-        this.sessionService.toggleLogin();
         this._router.navigate(['/home']);
       },
       (error) => {

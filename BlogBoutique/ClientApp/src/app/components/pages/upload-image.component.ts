@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,9 @@ export class UploadImageComponent {
   imgURL: any;
   public message: string = '';
   public blogId: number = 0;
+  public userId: number = 0;
   public image: FormData = new FormData();
+  @ViewChild('myForm') myForm: any;
 
   public constructor(private _router: Router,
     private _route: ActivatedRoute,
@@ -21,6 +23,10 @@ export class UploadImageComponent {
     let id = this._route.snapshot.paramMap.get('id');
     this.blogId = parseInt(<string>id);
     console.log('got blog id: ', this.blogId);
+
+    let uId = this._route.snapshot.paramMap.get('uid');
+    this.userId = parseInt(<string>uId);
+    console.log('got user id: ', this.userId);
 }
 
 
@@ -40,5 +46,12 @@ export class UploadImageComponent {
     reader.onload = (_event) => {
       this.imgURL = reader.result;
     }
+  }
+
+  public uploadImage() {
+    console.log('upload');
+    let form = this.myForm.nativeElement;
+    form.submit();
+    this._router.navigate(['/account', this.userId]);
   }
 }
