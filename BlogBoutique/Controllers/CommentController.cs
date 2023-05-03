@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace BlogBoutique.Controllers
 {
     [ApiController]
-    [Route("api/route")]
-    public class CommentController : Controller
+    [Route("api/comment")]
+    public class CommentController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetCommentsById(Int64 id)
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetCommentsById(int id)
         {
             try
             {

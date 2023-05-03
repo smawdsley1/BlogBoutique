@@ -8,8 +8,9 @@ namespace BlogBoutique.Models
     [Table("BlogBlogType")]
     public class BlogBlogTypeModel
     {
-        public virtual BlogModel? Blog { get; set; }
         public virtual BlogTypeModel? BlogType { get; set; }
+        [JsonIgnore]
+        public virtual BlogModel? Blog { get; set; }
 
         [Key]
         public Int64 BlogBlogTypeId { get; set; }

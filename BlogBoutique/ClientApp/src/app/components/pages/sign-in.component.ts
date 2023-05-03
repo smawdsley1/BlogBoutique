@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserModel } from '../../models/user-model';
 import { SessionService } from '../../services/session-service';
-import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticatedResponse } from '../../models/authenticatedResponse';
 
 @Component({
@@ -20,6 +20,7 @@ export class SigninComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute,
     private sessionService: SessionService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit() {
@@ -52,7 +53,7 @@ export class SigninComponent implements OnInit {
   }
 
   login() {
-   
+
     this.errorMessage = '';
     if (this.user?.username?.trim() == '') {
       this.errorMessage = 'Username is Required';
@@ -76,5 +77,20 @@ export class SigninComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  openModal(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      () => {
+        // Handle the modal closing action here if needed
+      },
+      () => {
+        // This is called when the modal is dismissed (closed without clicking the Sign Up button)
+      }
+    );
+  }
+
+  closeModal() {
+    this.modalService.dismissAll();
   }
 }

@@ -177,9 +177,9 @@ namespace BlogBoutique.Controllers
                         BlogBlogTypeModel type = new BlogBlogTypeModel();
                         type.BlogId = newBlog.BlogId;
                         type.BlogTypeId = bbt.BlogTypeId;
-                        // db.BlogBlogType.Add(type);
+                        db.BlogBlogType.Add(type);
                     }
-                    //db.SaveChanges();
+                    db.SaveChanges();
 
                     return new ObjectResult(newBlog);
                 }
@@ -271,7 +271,7 @@ namespace BlogBoutique.Controllers
                 {
                     byte[] buffer = UTF8Encoding.UTF8.GetBytes(DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "." + file.FileName);
                     buffer = sha.ComputeHash(buffer);
-                    hashName = Convert.ToBase64String(buffer).Replace('/', '_').Replace("=", "");
+                    hashName = Convert.ToBase64String(buffer).Replace('/', '_').Replace("=", "").Replace("+", "").Replace("%", "");
                     hashName += Path.GetExtension(file.FileName); // keep the extension so the browser can send the mime type from the extension
                 }
                 Console.WriteLine("computed hash: " + hashName);

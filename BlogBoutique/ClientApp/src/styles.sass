@@ -2,3 +2,24 @@
 
 /* Importing Bootstrap SCSS file. */
 /*@import '../node_modules/bootstrap/scss/bootstrap'*/
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap'
+.modal-backdrop
+  z-index: 1040 !important
+
+.modal-backdrop.show
+  opacity: 0.5
+
+.modal
+  display: flex !important
+  align-items: center
+  justify-content: center
+  z-index: 1050 !important
+
+.modal-content
+  background-color: #fff
+  border-radius: 0.25rem
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)
+  max-width: 500px
+  width: 100%

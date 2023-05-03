@@ -12,10 +12,10 @@ export class CommentService {
   }
 
   public getCommentsById(id: number): Observable<CommentModel[]> {
-    return this.http.get<CommentModel[]>(this.apiUrl + 'api/blog/GetBlogTypes/' + id);
+    return this.http.get<CommentModel[]>(this.apiUrl + 'api/comment/GetCommentsById/' + id);
   }
 
   public post(comment: CommentModel): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/blog/Post', comment)
+    return this.http.post<any>(this.apiUrl + 'api/comment/Post', comment)
   }
 }

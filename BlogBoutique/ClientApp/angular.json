@@ -26,7 +26,7 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "sass",
             "assets": [
-              "src/favicon.ico",
+              "src/blogline.ico",
               "src/assets",
               {
                 "glob": "**/*",
@@ -36,7 +36,6 @@
             ],
             "styles": [
               "src/styles.sass"
-
             ],
             "scripts": []
           },
@@ -95,12 +94,11 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "sass",
             "assets": [
-              "src/favicon.ico",
+              "src/blogline.ico",
               "src/assets"
             ],
             "styles": [
               "src/styles.sass"
-
             ],
             "scripts": []
           }

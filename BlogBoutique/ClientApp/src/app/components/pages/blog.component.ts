@@ -11,8 +11,7 @@ import { SessionService } from '../../services/session-service';
 @Component({
   selector: 'app-post',
   templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.css'],
-  providers: [BlogService, CommentService, SessionService],
+  providers: [BlogService, CommentService],
 
 })
 export class BlogComponent implements OnInit {
@@ -48,6 +47,7 @@ export class BlogComponent implements OnInit {
 
     console.log('reload');
 
+    console.log(this.sessionService.userId);
     
     this.blogService.getItemById(this.blogId).subscribe(
       result => {
@@ -104,7 +104,7 @@ export class BlogComponent implements OnInit {
 
   save() {
     this.errorMessage = '';
-    if (this.isLoggedIn) {
+    if (this.sessionService.isLoggedIn() == false) {
       this.errorMessage = "You must be logged in to Comment";
       return;
     }
@@ -122,6 +122,7 @@ export class BlogComponent implements OnInit {
       result => {
         this.dialog?.close();
         this._router.navigate(['/blog', this.blogId]);
+        this.reload();
       },
       error => {
       console.log(error);

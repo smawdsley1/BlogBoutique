@@ -8,7 +8,7 @@ import { SessionService } from '../../services/session-service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  providers: [SessionService, BlogService],
+  providers: [BlogService],
 })
 export class HomeComponent implements OnInit {
 
@@ -31,10 +31,11 @@ export class HomeComponent implements OnInit {
   {
     console.log('reload');
 
+    console.log(this.sessionService.userId);
+
     this.blogService.getBlogs().subscribe(
       result => {
         this.blogs = result.map(x => new BlogModel(x));
-        console.log('got blogs; ' + this.blogs);
       },
       error => {
         console.log(error);

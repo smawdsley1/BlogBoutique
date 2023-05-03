@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserModel } from '../../models/user-model';
 import { SessionService } from '../../services/session-service';
-import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'sign-up',
@@ -18,6 +18,7 @@ export class SignupComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute,
     private sessionService: SessionService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit() {
@@ -32,7 +33,7 @@ export class SignupComponent implements OnInit {
     console.log('reload');
 
     this.user = new UserModel();
-    
+
     console.log('reload done');
   }
 
@@ -71,5 +72,20 @@ export class SignupComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  openModal(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      () => {
+        // Handle the modal closing action here if needed
+      },
+      () => {
+        // This is called when the modal is dismissed (closed without clicking the Sign Up button)
+      }
+    );
+  }
+
+  closeModal() {
+    this.modalService.dismissAll();
   }
 }
