@@ -66,6 +66,8 @@ export class SignupComponent implements OnInit {
     this.sessionService.post(<UserModel>this.user).subscribe(
       (result) => {
         this._router.navigate(['/home']);
+        this.closeModal();
+
       },
       (error) => {
         this.errorMessage = 'Missing Required Information.';

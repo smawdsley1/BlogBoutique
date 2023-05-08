@@ -1,0 +1,50 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap" rel="stylesheet">
+
+<h1>{{item?.title}}</h1>
+<button class="btn btn-primary" (click)="goBack()">Go Back</button>
+
+<div *ngIf="image">
+  <img src="{{image.url}}" width="400" />
+</div>
+
+
+<p>{{item?.text}}</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Comments</th>
+      <th><button class="nav-link text-dark" (click)="open(myModal)">Add Comment</button></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let comment of comments">
+      <td></td>
+      <td>{{comment.text}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #myModal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Login</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <p *ngIf="errorMessage">{{errorMessage}}</p>
+
+    <p>Comment:</p>
+    <p><input type="text" class="form-control" [(ngModel)]="comment.text" /></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="save()">Add</button>
+    <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+  </div>
+</ng-template>

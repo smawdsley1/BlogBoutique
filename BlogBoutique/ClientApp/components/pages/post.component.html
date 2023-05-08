@@ -1,0 +1,38 @@
+<h1>Post Page</h1>
+
+<form [formGroup]="dropDownForm">
+  <ng-multiselect-dropdown [placeholder]="'Select The Genre(s) Your Blog Matches'"
+                           [settings]="dropdownSettings"
+                           [data]="dropdownList"
+                           formControlName="myItems"
+                           (onSelect)="onItemSelect($event)"
+                           (onDeSelect)="onItemDeSelect($event)">
+  </ng-multiselect-dropdown>
+</form>
+ 
+<div class="form-group" *ngIf="blog">
+  <label for="Title">Title</label>
+  <input type="text" id="title" name="title" class="form-control"
+         required [(ngModel)]="blog.title" #title="ngModel">
+  <div *ngIf="title.invalid && (title.dirty || title.touched)"
+       class="alert">
+    <div *ngIf="title.errors?.['required']">
+      A Title is required.
+    </div>
+  </div>
+  <label for="Text">Text</label>
+  <input type="text" id="text" name="text" class="form-control"
+         required [(ngModel)]="blog.text" #text="ngModel">
+  <div *ngIf="text.invalid && (text.dirty || text.touched)"
+       class="alert">
+    <div *ngIf="text.errors?.['required']">
+      A text body is required.
+    </div>
+  </div>
+</div>
+<div>
+  <p *ngIf="errorMessage">{{errorMessage}}</p>
+  <button class="btn btn-primary me-2" (click)="post()">Post Blog</button>
+</div>
+
+
