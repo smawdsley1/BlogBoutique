@@ -74,8 +74,18 @@ export class SignupComponent implements OnInit {
     );
   }
 
-  goBack() {
-    this._router.navigate(['/home']);
+  openModal(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      () => {
+        // Handle the modal closing action here if needed
+      },
+      () => {
+        // This is called when the modal is dismissed (closed without clicking the Sign Up button)
+      }
+    );
+  }
 
+  closeModal() {
+    this.modalService.dismissAll();
   }
 }
