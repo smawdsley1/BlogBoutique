@@ -1,4 +1,6 @@
-<h1>Blogline</h1>
+
+<body class="bodycolor">
+<h1>BloggingApp</h1>
 
 <div *ngIf="!blogs">
   <p>loading ;)</p>
@@ -15,8 +17,9 @@
   <tbody>
     <tr *ngFor="let blog of blogs">
       <td></td>
-      <td><a href="javascript:void(0)" (click)="goToBlog(blog.blogId)">{{blog.title}}</a></td>
+      <td><a href="javascript:void(0)" class="clickbody" (click)="goToBlog(blog.blogId)">{{blog.title}}</a></td>
     </tr>
   </tbody>
 
 </table>
+  </body>

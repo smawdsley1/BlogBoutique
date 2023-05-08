@@ -1,7 +1,7 @@
 .navbar
   display: flex
   justify-content: center
-  background-color: #ffffff
+  background-color: #710096
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
   padding: 0.5rem 0
 
@@ -9,6 +9,7 @@
   display: flex
   justify-content: space-between
   align-items: center
+  flex-direction: row
   width: 100%
   max-width: 1200px
   padding: 0 1rem
@@ -17,9 +18,9 @@
   font-family: 'Roboto', sans-serif
   font-size: 1.5rem
   font-weight: 500
-  color: #4285f4
+  color: #F5FFFA
   text-decoration: none
-  margin-right: 2rem /* Decrease this to move the main icon to the left */
+  margin-right: 2rem
 
 .navbar-nav
   display: flex
@@ -30,22 +31,14 @@
 .nav-item
   margin-left: 2rem
 
-.nav-link
+.nav-link, .nav-barAdjustments1, .nav-barAdjustments2
   font-family: 'Roboto', sans-serif
   font-size: 1rem
   font-weight: 500
-  color: #3c4043
+  color: white
   text-decoration: none
   transition: color 0.3s ease
-
-.nav-link1
-  font-family: 'Roboto', sans-serif
-  font-size: 1rem
-  font-weight: 500
-  color: #3c4043
-  text-decoration: none
-  transition: color 0.3s ease
-  margin-left: 2rem
+  line-height: 1.5
 
   &:hover
-    color: #4285f4
+    color: #F5FFFA

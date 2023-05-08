@@ -9,7 +9,7 @@ export function getBaseUrl() {
 }
 
 export function getApiUrl() {
- //return "https://localhost:20881/";
+ //return "https://localhost:63627/";
   return "https://eum61ap23j.execute-api.us-east-1.amazonaws.com/Prod/";
 }
 

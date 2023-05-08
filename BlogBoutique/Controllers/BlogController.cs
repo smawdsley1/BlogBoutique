@@ -280,7 +280,7 @@ namespace BlogBoutique.Controllers
                 conf.RegionEndpoint = RegionEndpoint.USEast1;
                 AmazonS3Client s3Client = new AmazonS3Client(Secrets.AWSKey, Secrets.AWSPass, conf);
                 PutObjectRequest req = new PutObjectRequest();
-                req.BucketName = "linfield.casey.2023";
+                req.BucketName = "linfield.shawn.2023";
                 req.FilePath = tempFilePath;
                 req.Key = hashName;
                 req.CannedACL = S3CannedACL.PublicRead;
@@ -289,7 +289,7 @@ namespace BlogBoutique.Controllers
 
                 Console.WriteLine("upload to s3... OK");
 
-                var imageUrl = $"https://s3.amazonaws.com/linfield.casey.2023/{hashName}";
+                var imageUrl = $"https://s3.amazonaws.com/linfield.shawn.2023/{hashName}";
 
                 using (MyContext db = new MyContext())
                 {

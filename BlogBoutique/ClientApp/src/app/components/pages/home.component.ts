@@ -9,6 +9,7 @@ import { SessionService } from '../../services/session-service';
   selector: 'app-home',
   templateUrl: './home.component.html',
   providers: [BlogService],
+  styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
 

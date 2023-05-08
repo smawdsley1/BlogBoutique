@@ -12,9 +12,12 @@ import { SessionService } from '../../services/session-service';
   selector: 'app-post',
   templateUrl: './blog.component.html',
   providers: [BlogService, CommentService],
+  styleUrls: ['./blog.component.sass']
 
 })
 export class BlogComponent implements OnInit {
+  
+
   isExpanded = false;
   private dialog: NgbModalRef | undefined = undefined;
   public item: BlogModel | undefined;
