@@ -37,6 +37,10 @@ export class SignupComponent implements OnInit {
     console.log('reload done');
   }
 
+  goBack() {
+    this._router.navigate(['/home']);
+  }
+
   login() {
     this.errorMessage = '';
     if (this.user?.firstName?.trim() == '') {
@@ -66,7 +70,6 @@ export class SignupComponent implements OnInit {
     this.sessionService.post(<UserModel>this.user).subscribe(
       (result) => {
         this._router.navigate(['/home']);
-        this.closeModal();
       },
       (error) => {
         this.errorMessage = 'Missing Required Information.';
@@ -75,18 +78,4 @@ export class SignupComponent implements OnInit {
     );
   }
 
-  openModal(content: any) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-      () => {
-        // Handle the modal closing action here if needed
-      },
-      () => {
-        // This is called when the modal is dismissed (closed without clicking the Sign Up button)
-      }
-    );
-  }
-
-  closeModal() {
-    this.modalService.dismissAll();
-  }
 }

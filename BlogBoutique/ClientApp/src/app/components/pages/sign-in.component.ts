@@ -69,7 +69,6 @@ export class SigninComponent implements OnInit {
         const token = response.token;
         localStorage.setItem("jwt", token);
         this.invalidLogin = false;
-        this.closeModal();
         this._router.navigate(['/home']);
       },
       (error) => {
