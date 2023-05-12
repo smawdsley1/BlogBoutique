@@ -10,7 +10,7 @@
     </div>
   </div>
   <label for="Text">Text</label>
-  <editor id="text"  initialValue="{{currentBlog.text}}"  required  [(ngModel)]="currentBlog.text" #text="ngModel"></editor>
+  <textarea id="text" name="{{currentBlog.text}}" class="form-control" rows="5" required [(ngModel)]="currentBlog.text" #text="ngModel"></textarea>
   <div *ngIf="text.invalid && (text.dirty || text.touched)" class="alert">
     <div *ngIf="text.errors?.['required']">
       Text is required.

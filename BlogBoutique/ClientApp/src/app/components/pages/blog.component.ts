@@ -128,36 +128,8 @@ export class BlogComponent implements OnInit {
         this.reload();
       },
       error => {
-        console.log(error);
+      console.log(error);
       }
-
     );
   }
-
-  getDaysAgo(dateCreated: Date | string | undefined) {
-    if (dateCreated instanceof Date) {
-      dateCreated = dateCreated.toISOString(); // convert to string in ISO format
-    }
-
-    if (typeof dateCreated === 'string') {
-      dateCreated = new Date(dateCreated); // convert string to Date object
-    }
-
-    if (dateCreated != undefined && !isNaN(dateCreated.getTime())) {
-      const today = new Date();
-      const diffTime = Math.abs(today.getTime() - dateCreated.getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      if (diffDays > 1) {
-        return `${diffDays} days ago`;
-      }
-      else {
-        const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
-        return `${diffHours} hours ago`;
-      }
-    }
-    return;
-  }
-
-
-
 }

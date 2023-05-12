@@ -37,10 +37,6 @@ export class SignupComponent implements OnInit {
     console.log('reload done');
   }
 
-  goBack() {
-    this._router.navigate(['/home']);
-  }
-
   login() {
     this.errorMessage = '';
     if (this.user?.firstName?.trim() == '') {
@@ -78,4 +74,8 @@ export class SignupComponent implements OnInit {
     );
   }
 
+  goBack() {
+    this._router.navigate(['/home']);
+
+  }
 }

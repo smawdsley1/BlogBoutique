@@ -9,7 +9,7 @@
                            (onDeSelect)="onItemDeSelect($event)">
   </ng-multiselect-dropdown>
 </form>
-
+ 
 <div class="form-group" *ngIf="blog">
   <label for="Title">Title</label>
   <input type="text" id="title" name="title" class="form-control"
@@ -21,8 +21,8 @@
     </div>
   </div>
   <label for="Text">Text</label>
-  <editor type="text" id="text" name="text" class="form-control"
-          required [(ngModel)]="blog.text" #text="ngModel"></editor>
+  <input type="text" id="text" name="text" class="form-control"
+         required [(ngModel)]="blog.text" #text="ngModel">
   <div *ngIf="text.invalid && (text.dirty || text.touched)"
        class="alert">
     <div *ngIf="text.errors?.['required']">
@@ -31,6 +31,8 @@
   </div>
 </div>
 <div>
-  <ng-container *ngIf="errorMessage">{{errorMessage}}</ng-container>
+  <p *ngIf="errorMessage">{{errorMessage}}</p>
   <button class="btn btn-primary me-2" (click)="post()">Post Blog</button>
 </div>
+
+

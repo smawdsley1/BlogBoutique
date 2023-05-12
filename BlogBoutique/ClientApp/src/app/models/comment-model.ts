@@ -5,7 +5,7 @@ export class CommentModel {
   public blogId: number = 0;
   public userId: number = 0;
   public text?: string = '';
-  public dateCreated?: Date = undefined;
+  public DateCreated?: Date = undefined;
 
   constructor(init?: Partial<CommentModel>) {
     Object.assign(this, init);

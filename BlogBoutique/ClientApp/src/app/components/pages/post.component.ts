@@ -7,7 +7,6 @@ import { IDropdownSettings, } from 'ng-multiselect-dropdown';
 import { BlogTypeModel } from '../../models/blog-type-model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BlogBlogTypeModel } from '../../models/blog-blog-type-model';
-import { EditorModule } from '@tinymce/tinymce-angular'
 
 @Component({
   selector: 'app-post',
@@ -30,7 +29,6 @@ export class PostComponent {
     private sessionService: SessionService,
     private blogService: BlogService,
     private fb: FormBuilder,
-    private editor: EditorModule
   ) { }
 
   ngOnInit() {

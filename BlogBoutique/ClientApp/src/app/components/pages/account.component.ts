@@ -71,6 +71,4 @@ export class AccountComponent {
     this._router.navigate(['/blog', blogId]);
   }
 
-
-
 }
