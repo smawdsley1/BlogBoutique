@@ -1,12 +1,13 @@
 <div>
   <h1>Upload Image</h1>
-
+  <!--https://oclksa88m6.execute-api.us-east-1.amazonaws.com/Prod/api/blog/UploadFile-->
+  <!--https://localhost:56253/api/blog/UploadFile-->
   <form #myForm action="https://oclksa88m6.execute-api.us-east-1.amazonaws.com/Prod/api/blog/UploadFile" target="_blank" method="POST" enctype="multipart/form-data">
     <input #file type="file" accept='image/*' name="file">
     <input type="hidden" name="blogId" value="{{blogId}}">
     <input type="button" value="Upload Image" (click)="uploadImage()">
   </form>
 
- 
+
 </div>
 

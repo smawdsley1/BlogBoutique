@@ -17,7 +17,7 @@ namespace BlogBoutique.Controllers
 
                 using (MyContext db = new MyContext())
                 {
-                    List<CommentModel> comments = db.Comment.Where(x => x.BlogId == id).ToList();
+                    List<CommentModel> comments = db.Comment.Where(x => x.BlogId == id).OrderByDescending(u => u.DateCreated).ToList();
                     if (comments == null)
                     {
                         return new NotFoundResult();

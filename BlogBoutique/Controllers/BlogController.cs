@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Text;
+using System;
 
 namespace BlogBoutique.Controllers
 {
@@ -32,8 +33,7 @@ namespace BlogBoutique.Controllers
 
                 using (MyContext db = new MyContext())
                 {
-                    List<BlogModel> blogs = db.Blog
-                        .ToList();
+                    List<BlogModel> blogs = db.Blog.OrderByDescending(u => u.DateCreated).ToList();
                     return new ObjectResult(blogs);
 
                 }
@@ -248,9 +248,11 @@ namespace BlogBoutique.Controllers
         public async Task<IActionResult> UploadFile(IFormFile file)
         {
             String tempFilePath = null;
+            StringBuilder sb = new StringBuilder();
+
             try
             {
-                Console.WriteLine("BlogController.UploadFile() updating a file " + file.FileName + DateTime.UtcNow.ToString());
+                sb.AppendLine("BlogController.UploadFile() updating a file " + file.FileName + DateTime.UtcNow.ToString());
 
                 if (!ImageHelper.IsImageFile(file))
                 {
@@ -274,7 +276,7 @@ namespace BlogBoutique.Controllers
                     hashName = Convert.ToBase64String(buffer).Replace('/', '_').Replace("=", "").Replace("+", "").Replace("%", "");
                     hashName += Path.GetExtension(file.FileName); // keep the extension so the browser can send the mime type from the extension
                 }
-                Console.WriteLine("computed hash: " + hashName);
+                sb.AppendLine("computed hash: " + hashName);
 
                 AmazonS3Config conf = new AmazonS3Config();
                 conf.RegionEndpoint = RegionEndpoint.USEast1;
@@ -287,7 +289,7 @@ namespace BlogBoutique.Controllers
                 req.ContentType = file.ContentType;
                 await s3Client.PutObjectAsync(req);
 
-                Console.WriteLine("upload to s3... OK");
+                sb.AppendLine("upload to s3... OK");
 
                 var imageUrl = $"https://s3.amazonaws.com/linfield.shawn.2023/{hashName}";
 
@@ -303,18 +305,22 @@ namespace BlogBoutique.Controllers
                     db.SaveChanges();
                 }
 
-                return Ok(new { imageUrl });
+                sb.AppendLine(imageUrl.ToString());
+
+                Console.WriteLine(sb.ToString());
+
+                return Ok(sb.ToString());
             }
             catch (Exception ex)
             {
-                Console.WriteLine("BlogController.UploadFile() got error: " + ex.Message + ", Stack = " + ex.StackTrace);
+                sb.AppendLine("BlogController.UploadFile() got error: " + ex.Message + ", Stack = " + ex.StackTrace);
                 return NotFound();
             }
             finally
             {
                 if (!String.IsNullOrWhiteSpace(tempFilePath))
                 {
-                    Console.WriteLine("deleting local file: " + tempFilePath);
+                    sb.AppendLine("deleting local file: " + tempFilePath);
                     try { System.IO.File.Delete(tempFilePath); } catch { }
                 }
             }
